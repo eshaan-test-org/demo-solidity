@@ -34,6 +34,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload SARIF report files to DeepSource
+        id: upload-sarif-to-deepsource
         run: |
           # Install the CLI
           curl https://deepsource.io/cli | sh
