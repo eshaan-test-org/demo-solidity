@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "solhint": "github:protofire/solhint#develop"
+  }
+}
