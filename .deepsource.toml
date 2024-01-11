@@ -7,3 +7,4 @@ type = "community"
 [[analyzers]]
 name = "solhint"
 type = "community"
+
