@@ -28,7 +28,7 @@ jobs:
 
       - name: Install solhint
         run: |
-          npm install protofire/solhint#develop # npm install solhint
+          npm install solhint@^4.1.1
 
       - name: Run solhint
         id: solhint
