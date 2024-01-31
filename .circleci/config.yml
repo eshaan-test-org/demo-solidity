@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  scan-and-report:
+  run-slither:
     docker:
       - image: cimg/python:3.12.1-node
     steps:
@@ -28,7 +28,31 @@ jobs:
             # Send the report to DeepSource
             ./bin/deepsource report --analyzer slither --analyzer-type community --value-file slither.sarif
 
+  run-solhint:
+    docker:
+      - image: cimg/node:16.20.2
+    steps:
+      - checkout
+      - run:
+          name: Install Solhint
+          command: |
+            npm install solhint@^4.1.1 # version installed should be greater than 4.1.1
+      - run:
+          name: Run solhint
+          command: |
+            # make sure to modify the path to your contracts
+            npx solhint '*.sol' -f sarif > solhint.sarif
+      # Make sure you set the `DEEPSOURCE_DSN` env variable as a secret in your project.
+      - run:
+          name: Upload SARIF report to DeepSource
+          command: |
+            # Install the DeepSource CLI
+            curl https://deepsource.io/cli | sh
+            # Send the report to DeepSource
+            ./bin/deepsource report --analyzer solhint --analyzer-type community --value-file solhint.sarif
+
 workflows:
-  scan-slither-workflow:
+  run-slither-solhint-workflow:
     jobs:
-      - scan-and-report
+      - run-slither
+      - run-solhint
