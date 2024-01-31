@@ -21,7 +21,7 @@ jobs:
           name: Run Slither
           command: |
             # make sure to modify the path to your contracts
-            slither . --sarif slither.sarif
+            SOLC_VERSION=0.4.15 slither . --sarif slither.sarif
       # Make sure you set the `DEEPSOURCE_DSN` env variable as a secret in your project.
       - run:
           name: Upload SARIF report to DeepSource
