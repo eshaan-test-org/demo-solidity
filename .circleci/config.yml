@@ -1,21 +1,11 @@
 version: 2.1
 
-orbs:
-  tailscale: threecomma/circleci-tailscale@2.2.0
-
 jobs:
   scan-and-report:
     docker:
       - image: cimg/python:3.12.1-node
     steps:
       - checkout
-      - run:
-          name: Tailscale setup
-          command: |
-            curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
-            curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
-            apt update
-            apt install -y python3 tailscale
       - run:
           name: Install Slither
           command: |
@@ -32,7 +22,6 @@ jobs:
           command: |
             # make sure to modify the path to your contracts
             slither . --sarif slither.sarif
-      - tailscale/connect
       # Make sure you set the `DEEPSOURCE_DSN` env variable as a secret in your project.
       - run:
           name: Upload SARIF report to DeepSource
