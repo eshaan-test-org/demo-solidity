@@ -41,7 +41,7 @@ jobs:
           name: Run solhint
           command: |
             # make sure to modify the path to your contracts
-            npx solhint '*.sol' -f sarif > solhint.sarif
+            npx solhint '*.sol' -f sarif > solhint.sarif || true
       # Make sure you set the `DEEPSOURCE_DSN` env variable as a secret in your project.
       - run:
           name: Upload SARIF report to DeepSource
