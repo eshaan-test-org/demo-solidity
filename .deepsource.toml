@@ -1,5 +1,7 @@
 version = 1
 
+# https://docs.deepsource.com/docs/community-analyzers
+
 [[analyzers]]
 name = "slither"
 type = "community"
